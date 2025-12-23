@@ -38,6 +38,7 @@
             text-shadow: 2px 2px 0 #000;
             margin-bottom: 5px;
             font-family: 'Sunflower', sans-serif;
+            margin-top: 10px;
         }
 
         h1 {
@@ -52,6 +53,39 @@
         .photo-area {
             position: relative;
             margin: 25px 0;
+        }
+
+        /* 음악 버튼 스타일 (수정됨: 작고 동그란 버튼) */
+        .music-btn {
+            position: absolute;
+            top: 0px;  /* 위치 조정 */
+            right: 5px; /* 오른쪽 끝으로 붙임 */
+            z-index: 100;
+            background-color: #fff; /* 배경색 추가 */
+            border: 2px solid #333; /* 테두리 추가 */
+            border-radius: 50%; /* 동그라미 모양 */
+            width: 32px; /* 너비 고정 */
+            height: 32px; /* 높이 고정 */
+            font-size: 1.2rem; /* 아이콘 크기 축소 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 2px 2px 0 rgba(0,0,0,0.1); /* 그림자 추가 */
+            padding: 0;
+            transition: all 0.2s;
+        }
+        
+        .music-btn:active {
+            transform: translate(2px, 2px); /* 눌리는 효과 */
+            box-shadow: none;
+        }
+        
+        /* 음악 꺼져있을 때 */
+        .music-btn.muted {
+            background-color: #eee;
+            opacity: 0.7;
+            filter: grayscale(100%);
         }
 
         /* 아린이 사진 스타일 */
@@ -82,15 +116,43 @@
             font-size: 2rem;
             z-index: 10;
         }
-        .balloon-1 { top: 20px; right: 25px; animation: float 3s ease-in-out infinite; font-size: 2.5rem; }
+        /* 풍선 위치가 버튼과 겹치지 않도록 확인 (right: 25px -> 버튼은 right: 5px) */
+        .balloon-1 { top: 25px; right: 35px; animation: float 3s ease-in-out infinite; font-size: 2.5rem; }
         .balloon-2 { top: 70px; right: 10px; animation: float 3s ease-in-out infinite 1s; font-size: 2rem; }
         .heart { top: 140px; right: 40px; color: #ff6b6b; font-size: 1.8rem; animation: pulse 1.5s infinite; }
         .star { bottom: 10px; left: 20px; color: #ffcc00; font-size: 2rem; }
         
-        /* 선물상자 위치 수정: 오른쪽 하단 구석으로 이동 */
+        /* 음악 재생 시 나타나는 음표 */
+        .music-note {
+            position: absolute;
+            font-size: 1.5rem;
+            color: #333;
+            opacity: 0; /* 기본적으로 안 보임 */
+            z-index: 15;
+            pointer-events: none; /* 클릭 방지 */
+        }
+        
+        /* 음악 재생 중일 때만 애니메이션 적용 */
+        .playing-mode .music-note {
+            animation: music-float 2s infinite linear;
+        }
+        
+        .note-1 { top: 150px; left: 30px; color: #ff6b6b; animation-delay: 0s; }
+        .note-2 { top: 40px; right: 50px; color: #6bcbef; animation-delay: 0.5s; font-size: 2rem; }
+        .note-3 { top: 180px; right: 40px; color: #ffcc00; animation-delay: 1s; }
+
+        @keyframes music-float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-40px) rotate(20deg); opacity: 0; }
+        }
+
+        /* 선물상자 위치 수정: 위쪽 날짜/시간 옆으로 이동 */
         .gift { 
-            bottom: 20px; 
-            right: 20px; 
+            top: 15px; /* 위쪽으로 이동 */
+            right: 15px; 
+            bottom: auto; /* 아래쪽 기준 해제 */
             font-size: 3rem; 
             transform: rotate(10deg);
             z-index: 20;
@@ -148,6 +210,8 @@
             align-items: center;
             margin-bottom: 12px;
             font-size: 1.3rem;
+            position: relative;
+            z-index: 25; /* 글자가 상자보다 위에 오도록 */
         }
         .info-icon { margin-right: 10px; font-size: 1.4rem; }
         
@@ -176,15 +240,18 @@
 
     </style>
 </head>
-<body>
+<body id="body-area">
 
     <div class="card-container">
+        
         <div class="header-deco">♥ 초 대 장 ♥</div>
         
-        <!-- 띄어쓰기 수정: 첫 생일에 -->
         <h1>이아린 첫 생일에<br>여러분을 초대합니다!</h1>
 
         <div class="photo-area">
+            <!-- 음악 컨트롤 버튼: 작고 귀여운 버튼으로 변경 -->
+            <button id="music-toggle-btn" class="music-btn" onclick="toggleMusic()">🎵</button>
+
             <div class="deco-text text-left-1">우왕</div>
             <div class="deco-text text-left-2">귀엽다</div>
             <div class="deco-text text-left-3">사랑둥이</div>
@@ -196,10 +263,14 @@
             <div class="icon balloon-2">🎈</div>
             <div class="icon heart">♥</div>
             <div class="icon star">⭐</div>
+
+            <!-- 음악 재생 시 나타날 음표들 -->
+            <div class="music-note note-1">♪</div>
+            <div class="music-note note-2">♫</div>
+            <div class="music-note note-3">♬</div>
         </div>
 
         <div class="message">
-            눈부시게 아름다운 오늘,<br>
             사랑스러운 <strong>아린</strong>이의 첫 돌입니다.<br>
             오셔서 함께 웃고 축하해주시면<br>
             더없는 기쁨이 되겠습니다!<br>
@@ -210,7 +281,7 @@
         </div>
 
         <div class="info-box">
-            <!-- 선물상자 아이콘 위치 조정됨 -->
+            <!-- 선물상자 아이콘 -->
             <div class="icon gift">🎁</div>
             
             <div class="info-row">
@@ -230,6 +301,55 @@
             </div>
         </div>
     </div>
+
+    <!-- 배경음악 오디오 태그: autoplay 추가 -->
+    <!-- loop: 반복 재생, autoplay: 자동 재생 -->
+    <audio id="bgm" loop autoplay>
+        <source src="bgm.mp3" type="audio/mp3">
+        <p>브라우저가 오디오 재생을 지원하지 않습니다.</p>
+    </audio>
+
+    <script>
+        // 페이지 로드 시 음악 상태 확인
+        window.addEventListener('load', function() {
+            var audio = document.getElementById("bgm");
+            var btn = document.getElementById("music-toggle-btn");
+            var body = document.getElementById("body-area");
+
+            // 자동 재생이 실제로 되었는지 확인
+            var playPromise = audio.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // 자동 재생 성공
+                    btn.classList.remove("muted");
+                    body.classList.add("playing-mode");
+                })
+                .catch(error => {
+                    // 자동 재생 차단됨 (브라우저 정책) -> 음소거 상태로 시작
+                    console.log("자동 재생이 차단되었습니다. 버튼을 눌러 재생해주세요.");
+                    btn.classList.add("muted");
+                    body.classList.remove("playing-mode");
+                });
+            }
+        });
+
+        function toggleMusic() {
+            var audio = document.getElementById("bgm");
+            var btn = document.getElementById("music-toggle-btn");
+            var body = document.getElementById("body-area");
+
+            if (audio.paused) {
+                audio.play();
+                btn.classList.remove("muted");
+                body.classList.add("playing-mode");
+            } else {
+                audio.pause();
+                btn.classList.add("muted");
+                body.classList.remove("playing-mode");
+            }
+        }
+    </script>
 
 </body>
 </html>
