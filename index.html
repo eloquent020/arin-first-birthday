@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이아린 첫돌 초대장</title>
-    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&display=swap" rel="stylesheet">
+    <!-- 귀여운 '감자꽃' 폰트와 '해바라기' 폰트 추가 -->
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Sunflower:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #ffdde1; /* 배경색: 핑크 */
-            font-family: 'Jua', sans-serif;
+            font-family: 'Gamja Flower', cursive; /* 전체 폰트 변경 */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -22,32 +23,35 @@
             width: 100%;
             max-width: 400px;
             padding: 20px;
-            border-radius: 15px; /* 둥근 모서리 */
-            border: 3px solid #000; /* 손그림 느낌의 검은 테두리 */
+            border-radius: 20px; /* 더 둥글게 */
+            border: 3px solid #000;
             box-shadow: 10px 10px 0px rgba(0,0,0,0.1);
             text-align: center;
             position: relative;
             box-sizing: border-box;
+            overflow: hidden; /* 장식이 튀어나가지 않게 */
         }
 
         .header-deco {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: #ff6b6b;
-            text-shadow: 2px 2px 0 #000; /* 만화 같은 그림자 */
-            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 #000;
+            margin-bottom: 5px;
+            font-family: 'Sunflower', sans-serif;
         }
 
         h1 {
-            font-family: 'Gaegu', cursive;
-            font-size: 1.8rem;
+            font-family: 'Gamja Flower', cursive;
+            font-size: 2.2rem;
             margin: 10px 0;
-            line-height: 1.3;
+            line-height: 1.2;
             word-break: keep-all;
+            color: #444;
         }
 
         .photo-area {
             position: relative;
-            margin: 20px 0;
+            margin: 25px 0;
         }
 
         /* 아린이 사진 스타일 */
@@ -55,31 +59,42 @@
             width: 220px;
             height: 220px;
             object-fit: cover;
-            border-radius: 50%; /* 원형 */
-            border: 4px solid #ffcc00; /* 노란 테두리 */
+            border-radius: 50%;
+            border: 5px solid #ffcc00;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* 주변 꾸미기 텍스트 (우왕, 귀엽다 등) */
+        /* 주변 꾸미기 텍스트 */
         .deco-text {
-            font-family: 'Gaegu', cursive;
             position: absolute;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            font-weight: bold;
             transform: rotate(-10deg);
+            color: #555;
         }
-        .text-left-1 { top: 20px; left: 10px; color: #333; }
-        .text-left-2 { top: 60px; left: 5px; color: #333; }
-        .text-left-3 { top: 100px; left: 10px; color: #333; }
+        .text-left-1 { top: 10px; left: 15px; color: #ff6b6b; transform: rotate(-15deg); }
+        .text-left-2 { top: 60px; left: 5px; color: #ffcc00; transform: rotate(10deg); }
+        .text-left-3 { top: 110px; left: 10px; color: #6bcbef; transform: rotate(-5deg); }
 
-        /* 풍선 및 아이콘 장식 */
+        /* 아이콘 장식 */
         .icon {
             position: absolute;
             font-size: 2rem;
+            z-index: 10;
         }
-        .balloon-1 { top: 30px; right: 20px; animation: float 3s ease-in-out infinite; }
-        .balloon-2 { top: 80px; right: 10px; animation: float 3s ease-in-out infinite 1s; font-size: 2.2rem;}
-        .heart { top: 140px; right: 40px; color: #ff6b6b; font-size: 1.5rem; }
-        .star { bottom: 10px; left: 30px; color: #ffcc00; font-size: 1.8rem; }
-        .gift { bottom: 10px; right: 200px; font-size: 2.5rem; transform: rotate(-10deg);}
+        .balloon-1 { top: 20px; right: 25px; animation: float 3s ease-in-out infinite; font-size: 2.5rem; }
+        .balloon-2 { top: 70px; right: 10px; animation: float 3s ease-in-out infinite 1s; font-size: 2rem; }
+        .heart { top: 140px; right: 40px; color: #ff6b6b; font-size: 1.8rem; animation: pulse 1.5s infinite; }
+        .star { bottom: 10px; left: 20px; color: #ffcc00; font-size: 2rem; }
+        
+        /* 선물상자 위치 수정: 오른쪽 하단 구석으로 이동 */
+        .gift { 
+            bottom: 20px; 
+            right: 20px; 
+            font-size: 3rem; 
+            transform: rotate(10deg);
+            z-index: 20;
+        }
 
         @keyframes float {
             0% { transform: translateY(0px); }
@@ -87,39 +102,76 @@
             100% { transform: translateY(0px); }
         }
 
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
         .message {
-            font-family: 'Gaegu', cursive;
-            font-size: 1.1rem;
+            font-size: 1.35rem; /* 글자 크기 약간 키움 */
             margin: 20px 0;
             line-height: 1.6;
             background-color: #fff8e1;
-            padding: 10px;
-            border-radius: 10px;
+            padding: 15px;
+            border-radius: 15px;
             border: 2px dashed #ffcc00;
+            color: #222; /* 글자색 진하게 */
+            font-weight: bold; /* 글자 굵게 */
+        }
+
+        .parents-info {
+            margin-top: 15px;
+            font-size: 1.4rem;
+            color: #000; /* 이름은 검정색 */
+            font-weight: bold;
+        }
+        
+        /* 아빠, 엄마 글자 색상 */
+        .parent-label {
+            color: #ff6b6b;
         }
 
         .info-box {
-            background-color: #eee;
+            background-color: #f9f9f9;
             border-top: 3px solid #333;
-            padding-top: 20px;
+            padding: 20px;
             margin-top: 20px;
             text-align: left;
-            padding-left: 15px;
+            padding-left: 20px;
+            border-radius: 0 0 15px 15px;
+            position: relative; /* 위치 기준점 */
         }
 
         .info-row {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-size: 1.3rem;
         }
-        .info-icon { margin-right: 10px; font-size: 1.3rem; }
+        .info-icon { margin-right: 10px; font-size: 1.4rem; }
+        
+        /* 장소 이름 강조 */
+        .place-name {
+            font-size: 1.5rem;
+            color: #ff6b6b;
+            text-decoration: underline;
+            text-underline-position: under;
+            text-decoration-color: #ffcc00;
+            text-decoration-thickness: 3px;
+        }
 
         .location-detail {
-            font-size: 0.9rem;
-            color: #666;
-            margin-left: 35px;
+            font-size: 1.2rem; /* 주소 글자 크기 키움 */
+            color: #000; /* 주소 글자색 진하게 */
+            font-weight: bold; /* 주소 굵게 */
+            margin-left: 38px;
             margin-top: -5px;
+            margin-bottom: 5px;
+            background-color: rgba(255, 255, 0, 0.3); /* 형광펜 효과 */
+            display: inline-block;
+            padding: 2px 5px;
+            border-radius: 5px;
         }
 
     </style>
@@ -129,31 +181,39 @@
     <div class="card-container">
         <div class="header-deco">♥ 초 대 장 ♥</div>
         
-        <h1>이아린 첫생일에<br>여러분을 초대합니다!</h1>
+        <!-- 띄어쓰기 수정: 첫 생일에 -->
+        <h1>이아린 첫 생일에<br>여러분을 초대합니다!</h1>
 
         <div class="photo-area">
             <div class="deco-text text-left-1">우왕</div>
             <div class="deco-text text-left-2">귀엽다</div>
-            <div class="deco-text text-left-3">사랑스럽다</div>
+            <div class="deco-text text-left-3">사랑둥이</div>
 
+            <!-- 이미지 경로 확인 필요 -->
             <img src="arin.jpg" alt="아린이 사진" class="baby-photo" onerror="this.src='https://via.placeholder.com/220?text=Baby+Photo'">
 
             <div class="icon balloon-1">🎈</div>
             <div class="icon balloon-2">🎈</div>
             <div class="icon heart">♥</div>
             <div class="icon star">⭐</div>
-            
         </div>
 
         <div class="message">
             눈부시게 아름다운 오늘,<br>
             사랑스러운 <strong>아린</strong>이의 첫 돌입니다.<br>
             오셔서 함께 웃고 축하해주시면<br>
-            더없는 기쁨이 되겠습니다!
+            더없는 기쁨이 되겠습니다!<br>
+            
+            <div class="parents-info">
+                <span class="parent-label">아빠</span> 이창준 ♥ <span class="parent-label">엄마</span> 김상아
+            </div>
         </div>
 
         <div class="info-box">
-            <div class="icon gift">🎁</div> <div class="info-row">
+            <!-- 선물상자 아이콘 위치 조정됨 -->
+            <div class="icon gift">🎁</div>
+            
+            <div class="info-row">
                 <span class="info-icon">📅</span>
                 <strong>2025년 12월 27일 (토)</strong>
             </div>
@@ -163,7 +223,7 @@
             </div>
             <div class="info-row">
                 <span class="info-icon">📍</span>
-                <strong>메리키친</strong>
+                <strong class="place-name">메리키친</strong>
             </div>
             <div class="location-detail">
                 (강원 춘천시 동면 금옥길 338)
